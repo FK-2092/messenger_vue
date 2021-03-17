@@ -1,4 +1,4 @@
-# messenger_vue
+# hello-vue3
 
 ## Project setup
 ```
