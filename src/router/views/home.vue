@@ -9,36 +9,26 @@
           Conversations
         </base-nav-item>
       </ul>
-      <main class="border-right">
-
-      </main>
-      <footer class="border-top border-right">
-        <div class="row mx-0 py-2 text-muted small text-monospace">
-          <div class="col-auto">User:</div>
-          <div class="col d-flex justify-content-end align-content-center">{{user}}</div>
-        </div>
-        <div>
-          <button class=" w-100 btn btn-primary rounded-0">
-            Add contact
-          </button>
-        </div>
-      </footer>
+      <sidebar-contacts v-if="$route.name === 'Contacts'"/>
+      <sidebar-conversations v-else/>
     </aside>
     <main class="col">
-
+      <main-conversations/>
     </main>
   </div>
 </template>
 
 <script>
-import {inject} from "vue";
-import {UserSettingsSymbol} from '@components/ProvideUserSettings';
+import SidebarContacts from "@components/sidebar-contacts.vue";
+import SidebarConversations from "@components/sidebar-conversations.vue";
+import MainConversations from "@components/main-conversations.vue";
 
 export default {
   name: "home",
-  setup() {
-    const {user} = inject(UserSettingsSymbol)
-    return {user}
+  components: {
+    MainConversations,
+    SidebarContacts,
+    SidebarConversations
   }
 }
 </script>
@@ -53,8 +43,5 @@ export default {
 aside {
   display: flex;
   flex-direction: column;
-  main {
-    flex-grow: 1;
-  }
 }
 </style>

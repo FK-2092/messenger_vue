@@ -5,6 +5,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import globalComponentInstaller from './components/_globals'
 
+import 'jquery'
+import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 
 const router = createRouter({
@@ -21,9 +23,9 @@ const router = createRouter({
             component: () => import('@views/home.vue')
         },
         {
-            path: '/conversations',
+            path: '/conversations/:id?',
             name: 'Conversations',
-            component: () => import('@views/home.vue')
+            component: () => import('@views/home.vue'),
         }
     ]
 })

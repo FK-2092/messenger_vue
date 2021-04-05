@@ -6,7 +6,7 @@
 
 <script>
 export default {
-name: "content-side"
+  name: "main-conversations"
 }
 </script>
 
