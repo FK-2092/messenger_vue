@@ -25,6 +25,8 @@ import ProvideContacts from "@components/ProvideContacts.js";
 import ProvideConversations from "@components/ProvideConversations.js";
 import arrow from '@assets/arrow_back.svg'
 
+import socket from '@src/socket.js'
+
 export default {
   name: 'App',
   components: {
@@ -36,6 +38,9 @@ export default {
     return {
       arrow
     }
+  },
+  created() {
+    socket.onAny((event, ...args) => console.log(event, args))
   }
 }
 </script>

@@ -13,7 +13,7 @@
       </div>
       <div class="w-100"></div>
       <div class="col-12 col-md-6 form-row mb-2">
-        <button class="w-100 btn btn-primary" @click="doLogin">
+        <button class="w-100 btn btn-primary" @click="onUsernameSelection">
           Login
         </button>
       </div>
@@ -32,6 +32,8 @@ import {inject} from 'vue'
 import {v4 as uuid} from 'uuid'
 
 import { UserSettingsSymbol } from '@components/ProvideUserSettings';
+
+import socket from '@src/socket.js'
 
 export default {
   name: "login",
@@ -53,9 +55,12 @@ export default {
     createUser() {
       this.form.user = uuid()
     },
-    doLogin() {
+    onUsernameSelection() {
       if(this.form.user !== ''){
-        this.updateUser(this.form.user)
+        const username = this.form.user
+        this.updateUser(username)
+        socket.auth = { username };
+        socket.connect();
         this.$router.push({name: 'Contacts'})
       } else {
         this.formErrors.user = 'Please choose a username.'
