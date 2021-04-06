@@ -40,7 +40,7 @@ export default {
     }
   },
   created() {
-    socket.onAny((event, ...args) => console.log(event, args))
+    socket.onAny((event, ...args) => console.log('EVENT',event, args))
   }
 }
 </script>

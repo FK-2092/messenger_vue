@@ -1,4 +1,5 @@
 const httpServer = require("http").createServer();
+const uuid = require('uuid').v4
 
 const io = require("socket.io")(httpServer, {
     cors: {
@@ -16,14 +17,35 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
-    const users = [];
-    for (let [id, socket] of io.of("/").sockets) {
-        users.push({
-            userID: id,
-            username: socket.username,
-        });
-    }
-    socket.emit("users", users);
+    const id = socket.handshake.auth.username
+    socket.join(id)
+
+    socket.onAny((event, ...args) => {
+        console.log('ANY', event, args, 'ENDANY');
+    })
+
+    socket.on('send-message', (message) => {
+        const {conversation} = message
+        io.to(conversation).emit('new-message', {
+            ...message,
+            id: uuid(),
+            user: {
+                name: id
+            }
+        })
+    })
+
+    socket.on('join-conversations', (conversations) => {
+        conversations.map(item => {
+            socket.join(item)
+        })
+    })
+
+    socket.on('leave-conversations', (conversations) => {
+        conversations.map(item => {
+            socket.leave(item)
+        })
+    })
 });
 
 httpServer.listen(3000)

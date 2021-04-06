@@ -61,7 +61,7 @@ export default {
         this.updateUser(username)
         socket.auth = { username };
         socket.connect();
-        this.$router.push({name: 'Contacts'})
+        this.$router.push({name: 'Conversations'})
       } else {
         this.formErrors.user = 'Please choose a username.'
       }
